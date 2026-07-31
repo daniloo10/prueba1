@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@theme {
+  --color-orange-engine: #FF5500;
+  --color-carbon: #0A0A0C;
+  --color-titanium: #141417;
+  --color-bone: #F4F4F6;
+  --color-ash: #2A2A30;
+  
+  --font-space: "Space Grotesk", sans-serif;
+  --font-syne: "Syne", serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+@layer base {
+  body {
+    @apply bg-carbon text-bone font-space;
+    overflow-x: hidden;
+  }
+}
+
+@layer utilities {
+  .text-glow {
+    text-shadow: 0 0 20px rgba(255, 85, 0, 0.4);
+  }
+  
+  .border-glass {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .bg-glass {
+    background-color: rgba(20, 20, 23, 0.6);
+    backdrop-filter: blur(12px);
+  }
+
+  .radius-xl {
+    border-radius: 1.5rem;
+  }
+
+  .radius-2xl {
+    border-radius: 2.5rem;
+  }
+  
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
