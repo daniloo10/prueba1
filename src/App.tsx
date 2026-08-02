@@ -10,11 +10,13 @@ import Pricing from './components/Pricing';
 import Footer from './components/Footer';
 import { AuthProvider } from './context/AuthContext';
 import AuthModal from './components/AuthModal';
+import AuditModal from './components/AuditModal';
 
 gsap.registerPlugin(ScrollTrigger);
 
 function App() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isAuditModalOpen, setIsAuditModalOpen] = useState(false);
 
   useEffect(() => {
     // Global ScrollTrigger setup or refresh if needed
@@ -24,9 +26,15 @@ function App() {
   return (
     <AuthProvider>
       <div className="relative min-h-screen bg-carbon overflow-hidden">
-        <Navbar onOpenAuth={() => setIsAuthModalOpen(true)} />
+        <Navbar 
+          onOpenAuth={() => setIsAuthModalOpen(true)} 
+          onOpenAudit={() => setIsAuditModalOpen(true)} 
+        />
         <main>
-          <Hero />
+          <Hero 
+            onOpenAuth={() => setIsAuthModalOpen(true)}
+            onOpenAudit={() => setIsAuditModalOpen(true)}
+          />
           <Features />
           <Manifesto />
           <SystemArchive />
@@ -36,6 +44,10 @@ function App() {
         <AuthModal 
           isOpen={isAuthModalOpen} 
           onClose={() => setIsAuthModalOpen(false)} 
+        />
+        <AuditModal 
+          isOpen={isAuditModalOpen} 
+          onClose={() => setIsAuditModalOpen(false)} 
         />
       </div>
     </AuthProvider>

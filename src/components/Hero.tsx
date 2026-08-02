@@ -2,8 +2,14 @@ import { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ArrowRight } from 'lucide-react';
 import { useMagneticHover } from '../hooks/useMagneticHover';
+import { useAuth } from '../context/AuthContext';
 
-export default function Hero() {
+interface HeroProps {
+  onOpenAuth?: () => void;
+  onOpenAudit?: () => void;
+}
+
+export default function Hero({ onOpenAuth, onOpenAudit }: HeroProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
@@ -12,6 +18,7 @@ export default function Hero() {
   
   const primaryBtnRef = useMagneticHover(0.3);
   const secondaryBtnRef = useMagneticHover(0.2);
+  const { user } = useAuth();
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -30,6 +37,14 @@ export default function Hero() {
     }, containerRef);
     return () => ctx.revert();
   }, []);
+
+  const handleAuditClick = () => {
+    if (user) {
+      onOpenAudit?.();
+    } else {
+      onOpenAuth?.();
+    }
+  };
 
   return (
     <section 
@@ -83,6 +98,7 @@ export default function Hero() {
         <div ref={actionsRef} className="flex flex-col sm:flex-row items-center gap-4">
           <button 
             ref={primaryBtnRef as any}
+            onClick={handleAuditClick}
             className="group relative flex items-center justify-center gap-3 bg-[#FF5500] text-white font-space font-semibold px-8 py-4 rounded-full shadow-[0_0_30px_rgba(255,85,0,0.25)] hover:shadow-[0_0_40px_rgba(255,85,0,0.4)] transition-all overflow-hidden"
           >
             <span className="relative z-10">Agendar Auditoría Técnica</span>

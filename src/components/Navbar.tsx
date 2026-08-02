@@ -6,9 +6,10 @@ import { LogOut, User } from 'lucide-react';
 
 interface NavbarProps {
   onOpenAuth?: () => void;
+  onOpenAudit?: () => void;
 }
 
-export default function Navbar({ onOpenAuth }: NavbarProps) {
+export default function Navbar({ onOpenAuth, onOpenAudit }: NavbarProps) {
   const navRef = useRef<HTMLElement>(null);
   const btnRef = useMagneticHover(0.2);
   const { user, signOut } = useAuth();
@@ -25,6 +26,14 @@ export default function Navbar({ onOpenAuth }: NavbarProps) {
     }, navRef);
     return () => ctx.revert();
   }, []);
+
+  const handleAuditClick = () => {
+    if (user) {
+      onOpenAudit?.();
+    } else {
+      onOpenAuth?.();
+    }
+  };
 
   return (
     <nav ref={navRef} className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-5xl">
@@ -79,6 +88,7 @@ export default function Navbar({ onOpenAuth }: NavbarProps) {
           {/* CTA */}
           <button 
             ref={btnRef as any}
+            onClick={handleAuditClick}
             className="bg-[#FF5500] text-white text-sm font-semibold px-5 py-2.5 rounded-full hover:bg-[#FF5500]/90 transition-colors shadow-[0_0_15px_rgba(255,85,0,0.3)] hover:scale-105 active:scale-95 flex items-center gap-2"
           >
             Agendar Auditoría
